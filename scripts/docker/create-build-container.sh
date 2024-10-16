@@ -27,6 +27,10 @@ case "${ARCH}" in
         docker_arch=arm64v8
         docker_platform=linux/arm64/v8
         ;;
+    riscv64)
+        docker_arch=riscv64
+        docker_platform=linux/riscv64
+        ;;
     *)
         echo "Unsupported architecture: $ARCH"
         exit 3

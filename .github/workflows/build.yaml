@@ -32,6 +32,7 @@ jobs:
         - appimage_arch: x86_64
         - appimage_arch: armhf
         - appimage_arch: aarch64
+        - appimage_arch: riscv64
 
     steps:
     - name: Checkout
@@ -82,6 +83,7 @@ jobs:
         - alpine_arch: x86
         - alpine_arch: armhf
         - alpine_arch: aarch64
+        - alpine_arch: riscv64
 
     steps:
     - name: Checkout

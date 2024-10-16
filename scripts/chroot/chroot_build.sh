@@ -4,7 +4,7 @@ set -ex
 
 if [ -z "${ALPINE_ARCH}" ]; then
     echo "Usage: env ALPINE_ARCH=<arch> $0"
-    echo "Example values: x86_64 x86 armhf aarch64"
+    echo "Example values: x86_64 x86 armhf aarch64 riscv64"
     exit 2
 fi
 
@@ -31,7 +31,7 @@ cd "$tempdir"
 # Download and extract minimal Alpine system
 #############################################
 
-wget "http://dl-cdn.alpinelinux.org/alpine/v3.17/releases/${ALPINE_ARCH}/alpine-minirootfs-3.17.2-${ALPINE_ARCH}.tar.gz"
+wget "http://dl-cdn.alpinelinux.org/alpine/v3.20/releases/${ALPINE_ARCH}/alpine-minirootfs-3.20.3-${ALPINE_ARCH}.tar.gz"
 mkdir -p ./miniroot
 cd ./miniroot
 sudo tar xf ../alpine-minirootfs-*-"${ALPINE_ARCH}".tar.gz
@@ -68,6 +68,10 @@ elif [ "$ALPINE_ARCH" = "armhf" ] ; then
     echo "Architecture is armhf, hence using qemu-arm-static"
     sudo cp "$(which qemu-arm-static)" miniroot/usr/bin
     sudo cp "$repo_root_dir"/scripts/chroot/build.sh miniroot/build.sh && sudo chroot miniroot qemu-arm-static /bin/sh -ex /scripts/chroot/build.sh
+elif [ "$ALPINE_ARCH" = "riscv64" ] ; then
+    echo "Architecture is riscv64, hence using qemu-riscv64-static"
+    sudo cp "$(which qemu-riscv64-static)" miniroot/usr/bin
+    sudo chroot miniroot qemu-riscv64-static /bin/sh -ex /scripts/chroot/build.sh
 else
     echo "Edit chroot_build.sh to support this architecture as well, it should be easy"
     exit 1
