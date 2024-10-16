@@ -2,6 +2,8 @@
 
 set -ex
 
+. /etc/profile
+
 if ! command -v apk; then
 	echo "This script should be run in an Alpine chroot environment"
 	exit 1
